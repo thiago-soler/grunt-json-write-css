@@ -1,0 +1,25 @@
+{
+	"cena1" : {
+
+		".exampleA" : {
+
+			"animation" : {
+
+				"name" : "exampleC",
+				"width" : 256,
+				"widthSprite" : 2048,
+				
+				"properties" : {
+					"duration" : ".8s",
+					"steps" : "steps(8)",
+					"iteration-count" : "infinite"
+				}
+
+			},
+
+			"index" : 1
+		}
+
+	}
+	
+}
