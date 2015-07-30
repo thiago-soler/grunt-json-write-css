@@ -1,24 +1,18 @@
 {
-	"cena1" : {
+	".exampleC": {
 
-		".exampleA" : {
+		"width": "26.666666666666668%",
+		"position": "relative",
+		"float": "left",
+		"overflow": "hidden"
 
-			"animation" : {
+	},
 
-				"name" : "exampleC",
-				"width" : 256,
-				"widthSprite" : 2048,
-				
-				"properties" : {
-					"duration" : ".8s",
-					"steps" : "steps(8)",
-					"iteration-count" : "infinite"
-				}
-
-			},
-
-			"index" : 1
-		}
+	"@keyframes exampleC": {
+			
+		"0%":  "0",
+		
+		"100%":  "100"
 
 	}
 	

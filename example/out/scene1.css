@@ -1,0 +1,19 @@
+.exampleC{
+width:26.666666666666668%;
+position:relative;
+float:left;
+overflow:hidden;
+}
+
+@keyframes exampleC{
+0%:0;
+100%:100;
+}
+
+.exampleC img{
+width:800%;
+position:relative;
+float:left;
+animation:exampleC .8s steps(8) infinite;
+}
+

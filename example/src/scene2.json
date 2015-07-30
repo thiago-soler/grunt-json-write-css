@@ -1,0 +1,11 @@
+{
+	".exampleC img": {
+
+		"width": "800%",
+		"position": "relative",
+		"float": "left",
+		"animation": "exampleC .8s steps(8) infinite"
+
+	}
+	
+}

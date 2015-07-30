@@ -1,0 +1,49 @@
+.exampleC{
+width : 26.666666666666668%;
+
+position : relative;
+float : left;
+
+
+
+overflow : hidden;
+
+
+}
+
+.exampleC img{
+width : 800%;
+
+position : relative;
+float : left;
+
+
+
+
+-webkit-animation: exampleC .8s steps(8) infinite;
+
+
+
+
+        animation: exampleC .8s steps(8) infinite;
+
+}
+
+@-webkit-keyframes exampleC{
+	0%  {
+		left : 0px; 
+	}
+	100%  {
+		left : -800%; 
+	}
+}
+
+@keyframes exampleC{
+	0%  {
+		left : 0px; 
+	}
+	100%  {
+		left : -800%; 
+	}
+}
+

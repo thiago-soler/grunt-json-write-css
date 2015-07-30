@@ -1,0 +1,5 @@
+*{margin:0;padding:0;border:0; font:bold 14px/17px Arial; text-align: center;}
+
+.container{width:100%; max-width: 960px; position:relative; margin:0 auto;}
+.blockA{position: relative; float: left;}
+.clearBoth{clear: both;}
