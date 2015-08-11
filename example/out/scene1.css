@@ -6,8 +6,15 @@ overflow:hidden;
 }
 
 @keyframes exampleC{
-0%:0;
-100%:100;
+0%{
+left:0px;
+}
+
+100%{
+left:33px;
+top:-800%;
+}
+
 }
 
 .exampleC img{

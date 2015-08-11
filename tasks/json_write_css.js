@@ -34,56 +34,67 @@ module.exports = function(grunt) {
 
     $private.write = {
 
-      iterator: function (json, isProp, selectorName) {
-        
-        selectorName = selectorName || '';
+      iterator: function (json, isProp, buffer) {
 
-        var idxA = '',
-            valueA = undefined,
-            selector = '{\n#properties#}\n\n',
+
+        buffer = buffer || '';
+
+        var idx = '',
+            idxName = '',
+            idxValue = undefined,
+            nameToReplace = '#properties#',
+            markupA = '{\n' + nameToReplace + '}\n\n',
+            // markupA = '{\n',
+            // markupB = '}\n\n',
             separator = ':',
             endLine = ';\n',
-            stringResult = '';
+            properties = '';
 
-        for (idxA in json) {
+        for (idx in json) {
           
-          valueA = json[idxA];
-          
-          if (isProp === true) {
-            
-            // console.log(selectorName, idxA);
+          idxName = idx;
+          idxValue = json[idx];
+          isProp = isProp || false;
 
-            stringResult += idxA + separator + valueA + endLine;
+          // Set the selector element
+          if (isProp === false && typeof idxValue === 'object') {
+            
+            buffer += idxName + markupA;
 
-          } else {
-            
-            $private.write.tempSelectors += idxA + selector.replace('properties', idxA);
-            selectorName = idxA;
-            
-            // console.log(' ');
-            // console.log('---------- seletores ------------');
-            // console.log(idxA);
-            // console.log('---------- seletores ------------');
-            // console.log(' ');
+            buffer = $private.write.iterator(idxValue, true, buffer);
 
           }
-          
 
-          if (typeof json[idxA] === 'object') {
-            $private.write.iterator(json[idxA], true, selectorName);
+          if (isProp === true && typeof idxValue === 'string') {
+
+            properties += idxName + separator + idxValue + endLine;
+
           }
+
+          if (isProp === true && typeof idxValue === 'object') {
+            
+            buffer = buffer.replace(nameToReplace, idxName + markupA + nameToReplace);
+            
+            buffer = $private.write.iterator(idxValue, true, buffer);
+          }
+
         }
 
-        $private.write.tempSelectors = $private.write.tempSelectors.replace('#' + selectorName + '#', stringResult);
+        if (isProp === true) {
 
+          buffer = buffer.replace(nameToReplace, properties);
+
+        }
+
+        return buffer;
+        
       },
 
-      css: function (file) {
-        grunt.file.write($private.write.dest, file);
-      },
+      css: function (buffer) {
 
-      tempSelectors: '',
-      tempProps: '',
+        grunt.file.write($private.write.dest, buffer);
+
+      },
 
       dest : ''
 
@@ -92,9 +103,9 @@ module.exports = function(grunt) {
     // Starts the process of creating the css file
     $private.init = function (json) {
 
-      $private.write.iterator(json);
+      var buffer = $private.write.iterator(json);
 
-      $private.write.css($private.write.tempSelectors);
+      $private.write.css(buffer);
 
     };
 
@@ -134,27 +145,27 @@ module.exports = function(grunt) {
 };
 
 
-/*
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-      // Handle options.
-      src += options.punctuation;
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
-  */
+
+  //   // Iterate over all specified file groups.
+  //   this.files.forEach(function(f) {
+  //     // Concat specified files.
+  //     var src = f.src.filter(function(filepath) {
+  //       // Warn on and remove invalid source files (if nonull was set).
+  //       if (!grunt.file.exists(filepath)) {
+  //         grunt.log.warn('Source file "' + filepath + '" not found.');
+  //         return false;
+  //       } else {
+  //         return true;
+  //       }
+  //     }).map(function(filepath) {
+  //       // Read file source.
+  //       return grunt.file.read(filepath);
+  //     }).join(grunt.util.normalizelf(options.separator));
+  //     // Handle options.
+  //     src += options.punctuation;
+  //     // Write the destination file.
+  //     grunt.file.write(f.dest, src);
+  //     // Print a success message.
+  //     grunt.log.writeln('File "' + f.dest + '" created.');
+  //   });
+  // 
