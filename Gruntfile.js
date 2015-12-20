@@ -19,11 +19,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     
-    // Before generating any new files, remove any previously-created files.
-    clean: {
-      tests: ['tmp']
-    },
-
+    
     // Configuration to be run (and then tested).
     json_write_css: {
 
@@ -54,11 +50,6 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         'tasks/*.js'
       ]
-    },
-
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js']
     }
 
   });

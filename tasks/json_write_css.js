@@ -9,6 +9,9 @@
 'use strict';
 
 var merge = require('merge');
+var autoprefixer = require('autoprefixer');
+var postcss = require('postcss');
+var cssmin = require('cssmin');
 
 module.exports = function(grunt) {
 
@@ -16,8 +19,16 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('json_write_css', 'This plugin writes CSS through the JSON files.', function() {
     
     // Merge task-specific and/or target-specific options with these defaults.
-    var files = this.files,
+    var defaults = {
+          autoPrefixer: true,
+          minify: true
+        },
+        options = this.data.options,
+        files = this.files,
         $private = {};
+
+    // Merge default options with custom options
+    options = merge.recursive(true, defaults, options);
 
     // JSON temporary, he is created to generate the css file
     $private.jsonOut = {};
@@ -91,6 +102,30 @@ module.exports = function(grunt) {
 
       },
 
+      autoPrefixer: function (buffer) {
+
+        var result = postcss([
+          autoprefixer(
+            {
+              browers: ['> 0.5%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
+            }
+          )
+        ]).process(buffer).css;
+
+
+        return result;
+
+      },
+
+      minify: function (buffer) {
+        
+        // Minified
+        var result = cssmin(buffer);
+
+        return result;
+
+      },
+
       dest: ''
 
     };
@@ -98,8 +133,21 @@ module.exports = function(grunt) {
     // Starts the process of creating the css file
     $private.init = function (json) {
 
+      // Creates the css buffer
       var buffer = $private.write.iterator(json);
 
+      // Set css compatibilty
+      if ((typeof options.autoPrefixer === 'object' && options.autoPrefixer.length > 0) || (options.autoPrefixer === true)) {
+        
+        buffer = $private.write.autoPrefixer(buffer);
+
+      }
+
+      // Set css compact
+      if (options.minify === true) {
+        buffer = $private.write.minify(buffer);
+      }
+      
       $private.write.css(buffer);
 
     };
