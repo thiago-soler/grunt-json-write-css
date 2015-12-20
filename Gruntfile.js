@@ -6,26 +6,19 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
+"use strict";
 
 module.exports = function(grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  // Load grunt tasks automatically
+  require('load-grunt-tasks')(grunt);
+
   // Project configuration.
   grunt.initConfig({
-    jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>'
-      ],
-      options: {
-        jshintrc: '.jshintrc'
-      }
-    },
-
+    
     // Before generating any new files, remove any previously-created files.
     clean: {
       tests: ['tmp']
@@ -47,6 +40,22 @@ module.exports = function(grunt) {
       
     },
 
+    // Hint tests.
+    jshint: {
+      options: {
+        globalstrict: true,
+        globals: {
+          module: true,
+          require: true
+        },
+        reporter: require('jshint-stylish')
+      },
+      target: [
+        'Gruntfile.js',
+        'tasks/*.js'
+      ]
+    },
+
     // Unit tests.
     nodeunit: {
       tests: ['test/*_test.js']
@@ -57,16 +66,9 @@ module.exports = function(grunt) {
   // Actually load this plugin's task(s).
   grunt.loadTasks('tasks');
 
-  // These plugins provide necessary tasks.
-  // grunt.loadNpmTasks('grunt-contrib-jshint');
-  // grunt.loadNpmTasks('grunt-contrib-clean');
-  // grunt.loadNpmTasks('grunt-contrib-nodeunit');
-
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  // grunt.registerTask('test', ['clean', 'json_write_css', 'nodeunit']);
-
-  // By default, lint and run all tests.
   grunt.registerTask('default', ['json_write_css']);
+  
+  // By default, lint and run all tests.
+  grunt.registerTask('test', ['jshint']);
 
 };
