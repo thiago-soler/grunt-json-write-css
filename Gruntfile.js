@@ -18,13 +18,13 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    
-    
+
+
     // Configuration to be run (and then tested).
     json_write_css: {
 
       scene1 : {
-        
+
         options: {},
 
         files : {
@@ -33,7 +33,13 @@ module.exports = function(grunt) {
 
       }
 
-      
+
+    },
+
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js'
+      }
     },
 
     // Hint tests.
@@ -58,8 +64,8 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   grunt.registerTask('default', ['json_write_css']);
-  
+
   // By default, lint and run all tests.
-  grunt.registerTask('test', ['jshint']);
+  grunt.registerTask('test', ['jshint', 'karma']);
 
 };
