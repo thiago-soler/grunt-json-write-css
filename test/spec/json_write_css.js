@@ -1,1 +1,0 @@
-var merge = require('merge');

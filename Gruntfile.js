@@ -36,12 +36,6 @@ module.exports = function(grunt) {
 
     },
 
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js'
-      }
-    },
-
     // Hint tests.
     jshint: {
       options: {
@@ -66,6 +60,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['json_write_css']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('test', ['jshint', 'karma']);
+  grunt.registerTask('test', ['jshint']);
 
 };
